@@ -1,0 +1,26 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+group 'com.github.invictum'
+version '1.0.0-SNAPSHOT'
+description 'Extends Serenity TAF with bility to use blocks'
+
+repositories {
+    mavenLocal()
+    jcenter()
+}
+
+dependencies {
+    compile 'net.serenity-bdd:serenity-core:1.9.14'
+    testCompile 'org.mockito:mockito-core:2.18.3'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            version version
+            artifact jar
+        }
+    }
+}
