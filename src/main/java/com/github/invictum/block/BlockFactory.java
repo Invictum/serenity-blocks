@@ -1,5 +1,11 @@
 package com.github.invictum.block;
 
+import net.serenitybdd.core.pages.WebElementFacade;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.util.List;
+
 /**
  * Parent factory for blocks
  * Implements some similar routines
@@ -32,5 +38,20 @@ public abstract class BlockFactory<T extends BaseBlock> {
     @Override
     public int hashCode() {
         return type.hashCode();
+    }
+
+    /**
+     * Checks filed is compatible with {@link List} of {@link WebElementFacade}
+     *
+     * @param field to check
+     * @return true if field is compatible, false otherwise
+     */
+    protected boolean isListCompatible(Field field) {
+        if (List.class.isAssignableFrom(field.getType())) {
+            ParameterizedType listType = (ParameterizedType) field.getGenericType();
+            Class<?> type = (Class<?>) listType.getActualTypeArguments()[0];
+            return WebElementFacade.class.isAssignableFrom(type);
+        }
+        return false;
     }
 }

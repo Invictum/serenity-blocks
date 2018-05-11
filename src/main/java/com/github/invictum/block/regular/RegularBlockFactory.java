@@ -1,12 +1,10 @@
 package com.github.invictum.block.regular;
 
 import com.github.invictum.DriverUtils;
-import com.github.invictum.EnhancedAnnotations;
+import com.github.invictum.DynamicAnnotations;
 import com.github.invictum.WebElementFacadeHandler;
 import com.github.invictum.WebElementListHandler;
 import com.github.invictum.block.BlockFactory;
-import net.serenitybdd.core.annotations.findby.di.ClasspathCustomFindByAnnotationProviderService;
-import net.serenitybdd.core.annotations.findby.di.CustomFindByAnnotationProviderService;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.webdriver.ThucydidesWebDriverSupport;
 import org.openqa.selenium.By;
@@ -21,11 +19,6 @@ import java.util.List;
 
 public class RegularBlockFactory<T extends RegularBlock> extends BlockFactory<T> {
 
-    /**
-     * Classpath provider - add integration with Serenity's facility
-     */
-    private CustomFindByAnnotationProviderService provider = new ClasspathCustomFindByAnnotationProviderService();
-
     public RegularBlockFactory(Class<T> type) {
         super(type);
     }
@@ -33,8 +26,8 @@ public class RegularBlockFactory<T extends RegularBlock> extends BlockFactory<T>
     @Override
     public T create() {
         // Build underlying block
-        By blockBy = new EnhancedAnnotations(type).buildBy();
         WebDriver driver = ThucydidesWebDriverSupport.getDriver();
+        By blockBy = new DynamicAnnotations(type, DriverUtils.resolvePlatform(driver)).buildBy();
         WebElementFacade block = facadeProxy(blockBy, driver);
         // Init block object
         T object = buildWithReflection(type);
@@ -42,13 +35,12 @@ public class RegularBlockFactory<T extends RegularBlock> extends BlockFactory<T>
         for (Field field : type.getDeclaredFields()) {
             // Proxy for single element
             if (WebElementFacade.class.isAssignableFrom(field.getType())) {
-                By by = new EnhancedAnnotations(field, DriverUtils.resolvePlatform(driver), provider).buildBy();
+                By by = new DynamicAnnotations(field, DriverUtils.resolvePlatform(driver)).buildBy();
                 setField(object, field, facadeProxy(by, block));
             }
             // Proxy for list of elements
-            if (List.class.isAssignableFrom(field.getType())) {
-                By by = new EnhancedAnnotations(field, DriverUtils.resolvePlatform(driver), provider).buildBy();
-                // TODO: Check List's generic type here
+            if (isListCompatible(field)) {
+                By by = new DynamicAnnotations(field, DriverUtils.resolvePlatform(driver)).buildBy();
                 setField(object, field, facadeList(by, block));
             }
         }

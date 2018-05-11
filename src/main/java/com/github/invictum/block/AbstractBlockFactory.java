@@ -1,7 +1,7 @@
 package com.github.invictum.block;
 
-import com.github.invictum.block.floating.FloatingBlock;
-import com.github.invictum.block.floating.FloatingBlockFactory;
+import com.github.invictum.block.floating.FragmentedBlock;
+import com.github.invictum.block.floating.FragmentedBlockFactory;
 import com.github.invictum.block.regular.RegularBlock;
 import com.github.invictum.block.regular.RegularBlockFactory;
 
@@ -19,8 +19,8 @@ public class AbstractBlockFactory {
         if (RegularBlock.class.isAssignableFrom(type)) {
             return new RegularBlockFactory(type);
         }
-        if (FloatingBlock.class.isAssignableFrom(type)) {
-            return new FloatingBlockFactory(type);
+        if (FragmentedBlock.class.isAssignableFrom(type)) {
+            return new FragmentedBlockFactory(type);
         }
         throw new IllegalStateException("Unable to find factory for " + type);
     }

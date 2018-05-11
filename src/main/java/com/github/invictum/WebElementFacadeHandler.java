@@ -31,7 +31,7 @@ public class WebElementFacadeHandler implements InvocationHandler {
             WebElementFacade facade = WebElementFacadeUtil.wrapWebElement(element);
             return method.invoke(facade, args);
         } catch (Exception e) {
-            throw new RuntimeException(e.getCause());
+            throw e.getCause();
         }
     }
 }

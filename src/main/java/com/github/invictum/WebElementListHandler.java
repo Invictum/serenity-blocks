@@ -25,14 +25,14 @@ public class WebElementListHandler implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         if (method.getName().contentEquals("toString")) {
-            return "List of <" + context + " -> " + locator + ">";
+            return String.format("List of <%s -> %s>", context, locator);
         }
         try {
             List<WebElementFacade> elementsList = context.findElements(locator).stream()
                     .map(WebElementFacadeUtil::wrapWebElement).collect(Collectors.toList());
             return method.invoke(elementsList, args);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw e.getCause();
         }
     }
 }

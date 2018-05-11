@@ -2,9 +2,9 @@ package com.github.invictum.block.floating;
 
 import com.github.invictum.block.BlockFactory;
 
-public class FloatingBlockFactory<T extends FloatingBlock> extends BlockFactory<T> {
+public class FragmentedBlockFactory<T extends FragmentedBlock> extends BlockFactory<T> {
 
-    public FloatingBlockFactory(Class<T> type) {
+    public FragmentedBlockFactory(Class<T> type) {
         super(type);
     }
 

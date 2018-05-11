@@ -1,7 +1,7 @@
 package com.github.invictum.block;
 
-import com.github.invictum.block.floating.FloatingBlock;
-import com.github.invictum.block.floating.FloatingBlockFactory;
+import com.github.invictum.block.floating.FragmentedBlock;
+import com.github.invictum.block.floating.FragmentedBlockFactory;
 import com.github.invictum.block.regular.RegularBlock;
 import com.github.invictum.block.regular.RegularBlockFactory;
 import org.junit.Assert;
@@ -30,7 +30,7 @@ public class AbstractBlockFactoryTest {
     public static Object[][] data() {
         return new Object[][]{
                 {RegularBlock.class, new RegularBlockFactory(RegularBlock.class)},
-                {FloatingBlock.class, new FloatingBlockFactory(FloatingBlock.class)}
+                {FragmentedBlock.class, new FragmentedBlockFactory(FragmentedBlock.class)}
         };
     }
 }
