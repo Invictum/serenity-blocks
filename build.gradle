@@ -1,13 +1,14 @@
 apply plugin: 'java'
 apply plugin: 'maven'
-apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
-group 'com.github.invictum'
-version '1.0.0-SNAPSHOT'
-description 'Extends Serenity TAF with bility to use blocks'
+group = 'com.github.invictum'
+version = '1.0.0-SNAPSHOT'
+description = 'Extends Serenity TAF with bility to use blocks'
+
+def isRelease = !version.toString().endsWith('SNAPSHOT')
 
 repositories {
-    mavenLocal()
     jcenter()
 }
 
@@ -16,11 +17,70 @@ dependencies {
     compile 'org.mockito:mockito-core:2.18.3'
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            version version
-            artifact jar
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            if (isRelease) {
+                beforeDeployment {
+                    MavenDeployment deployment -> signing.signPom(deployment)
+                }
+            }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name rootProject.group + ':' + rootProject.name
+                packaging 'jar'
+                artifactId rootProject.name
+                description rootProject.description
+                url 'https://github.com/Invictum/serenity-blocks'
+                scm {
+                    connection 'scm:git:git@github.com:Invictum/serenity-blocks.git'
+                    developerConnection 'scm:git:git@github.com:Invictum/serenity-blocks.git'
+                    url 'git@github.com:Invictum/serenity-reportportal-integration.git'
+                }
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        name 'Yaroslav Yershov'
+                        email 'zim182@gmail.com'
+                    }
+                }
+            }
         }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+if (isRelease) {
+    artifacts {
+        archives sourcesJar, javadocJar
+    }
+    signing {
+        useGpgCmd()
+        sign configurations.archives
     }
 }
