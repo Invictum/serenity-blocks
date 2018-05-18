@@ -28,4 +28,6 @@ public class AnnotationDummy extends BaseBlock {
     public List<WebElementFacade> compatibleList;
 
     public List<Object> incompatibleList;
+
+    private WebElementFacade data;
 }

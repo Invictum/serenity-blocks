@@ -27,6 +27,7 @@ public class WebElementFacadeHandler implements InvocationHandler {
             return context + " -> " + locator;
         }
         try {
+            DriverUtils.ignite();
             WebElement element = context.findElement(locator);
             WebElementFacade facade = WebElementFacadeUtil.wrapWebElement(element);
             return method.invoke(facade, args);

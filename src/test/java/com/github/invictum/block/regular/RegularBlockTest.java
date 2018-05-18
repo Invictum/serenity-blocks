@@ -1,15 +1,15 @@
-package com.github.invictum.block;
+package com.github.invictum.block.regular;
 
 import net.serenitybdd.core.pages.WebElementFacade;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public class BaseBlockTest {
+public class RegularBlockTest {
 
     @Test
     public void asWebElementFacade() {
-        BaseBlock baseBlock = new BaseBlock();
+        RegularBlock baseBlock = new RegularBlock();
         WebElementFacade elementMock = Mockito.mock(WebElementFacade.class);
         baseBlock.setBlock(elementMock);
         Assert.assertEquals(elementMock, baseBlock.asWebElementFacade());
@@ -17,7 +17,7 @@ public class BaseBlockTest {
 
     @Test(expected = IllegalStateException.class)
     public void setBlockMultiple() {
-        BaseBlock baseBlock = new BaseBlock();
+        RegularBlock baseBlock = new RegularBlock();
         WebElementFacade elementMock = Mockito.mock(WebElementFacade.class);
         baseBlock.setBlock(elementMock);
         baseBlock.setBlock(elementMock);

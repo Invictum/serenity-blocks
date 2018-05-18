@@ -1,4 +1,4 @@
-package com.github.invictum.block.floating;
+package com.github.invictum.block.fragmented;
 
 import com.github.invictum.block.BaseBlock;
 

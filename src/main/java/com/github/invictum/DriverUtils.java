@@ -1,6 +1,10 @@
 package com.github.invictum;
 
+import net.thucydides.core.ThucydidesSystemProperty;
+import net.thucydides.core.guice.Injectors;
+import net.thucydides.core.util.EnvironmentVariables;
 import net.thucydides.core.webdriver.MobilePlatform;
+import net.thucydides.core.webdriver.ThucydidesWebDriverSupport;
 import net.thucydides.core.webdriver.WebDriverFacade;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
@@ -35,6 +39,17 @@ public class DriverUtils {
             return ((WebDriverFacade) driver).getCurrentImplicitTimeout().toMillis();
         } else {
             return 10000;
+        }
+    }
+
+    /**
+     * Starts Serenity's driver facility if inactive
+     */
+    public static void ignite() {
+        if (!ThucydidesWebDriverSupport.isDriverInstantiated()) {
+            EnvironmentVariables variables = Injectors.getInjector().getProvider(EnvironmentVariables.class).get();
+            String url = variables.getProperty(ThucydidesSystemProperty.WEBDRIVER_BASE_URL);
+            ThucydidesWebDriverSupport.getDriver().get(url);
         }
     }
 }

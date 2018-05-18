@@ -13,6 +13,7 @@ public class WebElementFacadeHandlerTest {
         By locator = By.xpath("//div");
         SearchContext contextMock = Mockito.mock(SearchContext.class);
         Mockito.when(contextMock.toString()).thenReturn("Context");
+        Mockito.when(contextMock.toString()).thenReturn("Context");
         WebElementFacadeHandler handler = new WebElementFacadeHandler(locator, contextMock);
         String actual = (String) handler.invoke(new Object(), Object.class.getMethod("toString"), new Object[]{});
         Assert.assertEquals("Context -> By.xpath: //div", actual);

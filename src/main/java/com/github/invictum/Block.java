@@ -12,7 +12,7 @@ public class Block {
     /**
      * Builds a new block instance
      *
-     * @param blockType to build, should extend {@link BaseBlock}
+     * @param blockType to newInstance, should extend {@link BaseBlock}
      * @param <T>       type
      * @return assembled block
      */

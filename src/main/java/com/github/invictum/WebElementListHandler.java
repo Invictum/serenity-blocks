@@ -28,6 +28,7 @@ public class WebElementListHandler implements InvocationHandler {
             return String.format("List of <%s -> %s>", context, locator);
         }
         try {
+            DriverUtils.ignite();
             List<WebElementFacade> elementsList = context.findElements(locator).stream()
                     .map(WebElementFacadeUtil::wrapWebElement).collect(Collectors.toList());
             return method.invoke(elementsList, args);

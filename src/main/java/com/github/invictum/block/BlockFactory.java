@@ -1,10 +1,8 @@
 package com.github.invictum.block;
 
-import net.serenitybdd.core.pages.WebElementFacade;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.util.List;
+import com.github.invictum.DriverUtils;
+import net.thucydides.core.webdriver.MobilePlatform;
+import org.openqa.selenium.WebDriver;
 
 /**
  * Parent factory for blocks
@@ -15,9 +13,11 @@ import java.util.List;
 public abstract class BlockFactory<T extends BaseBlock> {
 
     protected Class<T> type;
+    protected MobilePlatform platform;
 
-    public BlockFactory(Class<T> type) {
+    public BlockFactory(Class<T> type, WebDriver driver) {
         this.type = type;
+        this.platform = DriverUtils.resolvePlatform(driver);
     }
 
     /**
@@ -38,20 +38,5 @@ public abstract class BlockFactory<T extends BaseBlock> {
     @Override
     public int hashCode() {
         return type.hashCode();
-    }
-
-    /**
-     * Checks filed is compatible with {@link List} of {@link WebElementFacade}
-     *
-     * @param field to check
-     * @return true if field is compatible, false otherwise
-     */
-    protected boolean isListCompatible(Field field) {
-        if (List.class.isAssignableFrom(field.getType())) {
-            ParameterizedType listType = (ParameterizedType) field.getGenericType();
-            Class<?> type = (Class<?>) listType.getActualTypeArguments()[0];
-            return WebElementFacade.class.isAssignableFrom(type);
-        }
-        return false;
     }
 }
