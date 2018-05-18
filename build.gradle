@@ -7,8 +7,8 @@ version = '1.0.0-SNAPSHOT'
 description = 'Extends Serenity TAF with bility to use blocks'
 
 def isRelease = !version.toString().endsWith('SNAPSHOT')
-def username = System.getProperty("ossrh.username", ossrhUsername)
-def password = System.getProperty("ossrh.password", ossrhPassword)
+def username = System.getenv("ossrh.username") ?: ossrhUsername
+def password = System.getenv("ossrh.password") ?: ossrhPassword
 
 repositories {
     jcenter()
