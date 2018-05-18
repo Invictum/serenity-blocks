@@ -7,6 +7,8 @@ version = '1.0.0-SNAPSHOT'
 description = 'Extends Serenity TAF with bility to use blocks'
 
 def isRelease = !version.toString().endsWith('SNAPSHOT')
+def username = System.getProperty("ossrh.username", ossrhUsername)
+def password = System.getProperty("ossrh.password", ossrhPassword)
 
 repositories {
     jcenter()
@@ -27,10 +29,10 @@ uploadArchives {
             }
 
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
+                authentication(userName: username, password: password)
             }
             snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
+                authentication(userName: username, password: password)
             }
 
             pom.project {
