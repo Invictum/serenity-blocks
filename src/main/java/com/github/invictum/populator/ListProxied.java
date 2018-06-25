@@ -1,4 +1,4 @@
-package com.github.invictum.filler;
+package com.github.invictum.populator;
 
 import com.github.invictum.DynamicAnnotations;
 import com.github.invictum.ProxyBuilder;
@@ -12,7 +12,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-public class ListProxied implements FieldFiller {
+public class ListProxied implements FieldPopulator {
 
     private MobilePlatform platform;
     private SearchContext context;

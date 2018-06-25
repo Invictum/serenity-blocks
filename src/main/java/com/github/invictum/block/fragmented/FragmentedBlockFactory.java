@@ -2,9 +2,9 @@ package com.github.invictum.block.fragmented;
 
 import com.github.invictum.ReflectionUtils;
 import com.github.invictum.block.BlockFactory;
-import com.github.invictum.filler.Fillers;
-import com.github.invictum.filler.ListProxied;
-import com.github.invictum.filler.SingleProxied;
+import com.github.invictum.populator.Populators;
+import com.github.invictum.populator.ListProxied;
+import com.github.invictum.populator.SingleProxied;
 import org.openqa.selenium.WebDriver;
 
 import java.util.stream.Stream;
@@ -21,8 +21,8 @@ public class FragmentedBlockFactory<T extends FragmentedBlock> extends BlockFact
     @Override
     public T create() {
         T object = ReflectionUtils.newInstance(type);
-        Fillers fillers = Fillers.prepare(new SingleProxied(platform, driver), new ListProxied(platform, driver));
-        Stream.of(type.getDeclaredFields()).forEach(field -> fillers.proceed(field, object));
+        Populators populators = Populators.prepare(new SingleProxied(platform, driver), new ListProxied(platform, driver));
+        Stream.of(type.getDeclaredFields()).forEach(field -> populators.proceed(field, object));
         return object;
     }
 }

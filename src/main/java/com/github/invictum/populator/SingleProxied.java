@@ -1,4 +1,4 @@
-package com.github.invictum.filler;
+package com.github.invictum.populator;
 
 import com.github.invictum.DynamicAnnotations;
 import com.github.invictum.ProxyBuilder;
@@ -10,7 +10,7 @@ import org.openqa.selenium.SearchContext;
 
 import java.lang.reflect.Field;
 
-public class SingleProxied implements FieldFiller {
+public class SingleProxied implements FieldPopulator {
 
     private MobilePlatform platform;
     private SearchContext context;

@@ -1,7 +1,7 @@
 package com.github.invictum.fillers;
 
 import com.github.invictum.AnnotationDummy;
-import com.github.invictum.filler.SingleProxied;
+import com.github.invictum.populator.SingleProxied;
 import net.thucydides.core.webdriver.MobilePlatform;
 import org.junit.Assert;
 import org.junit.Test;

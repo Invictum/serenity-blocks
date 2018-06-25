@@ -1,8 +1,8 @@
-package com.github.invictum.filler;
+package com.github.invictum.populator;
 
 import java.lang.reflect.Field;
 
-public interface FieldFiller {
+public interface FieldPopulator {
     /**
      * Try to fill specified {@link Field} for specified {@link Object} target
      *
