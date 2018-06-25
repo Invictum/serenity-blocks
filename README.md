@@ -161,7 +161,7 @@ Create a text file `resources/META-INF/services/net.serenitybdd.core.annotations
 
 All described code is related to pure Serenity, so check [Serenity Guide](http://www.thucydides.info/docs/serenity/) for more details.
 
-2. Define your cistom annotation
+2. Define your custom block annotation
 
 ```
 @Retention(RetentionPolicy.RUNTIME)
@@ -173,7 +173,7 @@ public @interface CustomIOSBlock {
 
 3. Now you have to describe how to extract locator annotation from custom block annotation
 
-Implement `DefaultBlockEncounter` interface and supply proper logic
+Implement `DefaultBlockEncounter` interface and provide proper logic of extraction
 
 ```
 public class IOSBlockEncounter implements AnnotationBlockEncounter {
@@ -197,6 +197,8 @@ public class MyEncounterProvider implements BlockEncounterProvider {
     }
 }
 ```
+If you have several implementations of `AnnotationBlockEncounter`, `BlockEncounterProvider` should return them all.
+For example it is possible to implement different block annotations for iOS and Android and use them both at the same time.
 
 5. Finally `BlockEncounterProvider` should be configured in `SerenityBlocksConfiguration`
 
@@ -204,6 +206,9 @@ public class MyEncounterProvider implements BlockEncounterProvider {
 BlockEncounterProvider provider = new MyEncounterProvider();
 SerenityBlocksConfiguration.setBlockEncounterProvider(provider);
 ```
+
+>**Note**
+>Configuration must be provided before Serenity facility init, otherwise it will be ignored.
 
 For now all preparation is ready and it is possible to use `@CustomIOSBlock` on your blocks
 
